@@ -60,9 +60,11 @@ public class patientsRegistration extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (validateAndRegister()) {
-                    Database();
-                    Intent i = new Intent(patientsRegistration.this, patientsDashBoard.class);
+
+        if(validateAndRegister())
+                { Database();
+                    Intent i=new Intent(patientsRegistration.this,patientLogin.class);
+                    i.putExtra("Pass",passReg.getText().toString().trim());
                     startActivity(i);
                 } else {
                     Toast.makeText(patientsRegistration.this, "Registration Failed!!!", Toast.LENGTH_SHORT).show();
@@ -141,7 +143,7 @@ public class patientsRegistration extends AppCompatActivity {
     }
 
     private boolean isValidPassword(String password) {
-        if (password.length() < 13) {
+        if (password.length() < 8) {
             return false;
         }
 
