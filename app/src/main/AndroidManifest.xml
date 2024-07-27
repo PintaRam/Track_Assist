@@ -13,17 +13,6 @@
         android:theme="@style/Theme.Track_Assist"
         tools:targetApi="31">
 
-        <!--
-             TODO: Before you run your application, you need a Google Maps API key.
-
-             To get one, follow the directions here:
-
-                https://developers.google.com/maps/documentation/android-sdk/get-api-key
-
-             Once you have your API key (it starts with "AIza"), define a new property in your
-             project's local.properties file (e.g. MAPS_API_KEY=Aiza...), and replace the
-             "YOUR_API_KEY" string in this file with "${MAPS_API_KEY}".
-        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/MAPS_API_KEY" />
@@ -35,8 +24,13 @@
         <activity
             android:name=".dashboard"
             android:exported="true">
-
         </activity>
+
+        <activity>
+            android:name=".patientsRegistration"
+            android:exported="true" >
+        </activity>
+
         <activity
             android:name=".patientsRegistration"
             android:exported="false"></activity>
@@ -46,6 +40,15 @@
         <activity
             android:name=".patientsDashBoard"
             android:exported="true"></activity>
+
+
+        <activity
+            android:name=".patientLogin"
+            android:exported="true" />
+       <activity
+        android:name=".patientsDashBoard"
+        android:exported="false" />
+
         <activity
             android:name=".Splash"
             android:exported="true">
