@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ public class patientLogin extends AppCompatActivity {
     private EditText editTextId;
     private EditText editTextPassword;
     private Button buttonLogin;
+    String patId,patPas;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,11 @@ public class patientLogin extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
 
+        patPas=getIntent().getStringExtra("Pass");
+        patId=getIntent().getStringExtra("Id");
+
+        Log.d(patPas,"Patient Password");
+        Log.d(patId,"Patinet ID");
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,7 +46,7 @@ public class patientLogin extends AppCompatActivity {
 
                 if (validatePassword(password)) {
                     // Successful validation, navigate to PatientDashboardActivity
-                    Intent intent = new Intent(patientLogin.this, patientsDashBoard.class);
+                    Intent intent = new Intent(patientLogin.this, dashboard.class);
                     startActivity(intent);
                     finish();
                 } else {
@@ -52,9 +59,8 @@ public class patientLogin extends AppCompatActivity {
 
     private boolean validatePassword(String password) {
         // Add your password validation logic here
-        // For example, check if the password is not empty and matches a predefined password
-        String validPassword = "your_valid_password"; // Replace with your valid password logic
-        return password.equals(validPassword);
+        return password.matches(patPas);
+
     }
 }
 
