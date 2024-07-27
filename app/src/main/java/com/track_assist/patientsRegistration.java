@@ -63,9 +63,6 @@ public class patientsRegistration extends AppCompatActivity {
 
         if(validateAndRegister())
                 { Database();
-                    Intent i=new Intent(patientsRegistration.this,patientLogin.class);
-                    i.putExtra("Pass",passReg.getText().toString().trim());
-                    startActivity(i);
                 } else {
                     Toast.makeText(patientsRegistration.this, "Registration Failed!!!", Toast.LENGTH_SHORT).show();
                 }
