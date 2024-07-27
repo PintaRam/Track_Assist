@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.google.gms.google.services)
     id("com.google.gms.google-services")
     alias(libs.plugins.com.google.android.libraries.mapsplatform.secrets.gradle.plugin)
 
@@ -53,20 +52,10 @@ dependencies {
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")
+    implementation(libs.gms.play.services.maps)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-}
-
-    implementation("com.google.firebase:firebase-database:21.0.0")
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    implementation("com.google.firebase:firebase-analytics:22.0.0")
-    implementation("com.google.firebase:firebase-storage:21.0.0")
-    implementation ("com.google.android.gms:play-services-maps:19.0.0")
-    implementation("com.airbnb.android:lottie:6.4.1")
-
 }
 
