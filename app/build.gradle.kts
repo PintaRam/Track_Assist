@@ -1,7 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.google.gms.google.services)
     id("com.google.gms.google-services")
     alias(libs.plugins.com.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+
 }
 
 android {
@@ -10,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "com.track_assist"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -27,6 +29,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -37,12 +40,25 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation("com.airbnb.android:lottie:6.4.1")
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+
+    // Firebase dependencies using BOM
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-storage")
+
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+}
+
     implementation("com.google.firebase:firebase-database:21.0.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
@@ -53,3 +69,4 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.4.1")
 
 }
+

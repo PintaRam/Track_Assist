@@ -30,7 +30,10 @@
                  startActivity(intent);
                  finish();
              }
-         }, 3000);
+
+         }, 4000);
+
+
 
      }
  }
