@@ -26,7 +26,7 @@
          handler.postDelayed(new Runnable() {
              @Override
              public void run() {
-                 Intent intent = new Intent(Splash.this,selectionOFUser.class);
+                 Intent intent = new Intent(Splash.this,guideDashboard.class);
                  startActivity(intent);
                  finish();
              }
