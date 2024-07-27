@@ -12,19 +12,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Track_Assist"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/MAPS_API_KEY" />
+
         <activity
-
-            android:name=".patientsRegistration"
-            android:exported="true" >
-
+            android:name=".Map_fragment"
+            android:exported="false"
+            android:label="@string/title_activity_map_fragment" />
+        <activity
+            android:name=".dashboard"
+            android:exported="true">
         </activity>
 
+        <activity>
+            android:name=".patientsRegistration"
+            android:exported="true" >
+        </activity>
+
+        <activity
+            android:name=".patientsRegistration"
+            android:exported="false"></activity>
         <activity
             android:name=".selectionOFUser"
             android:exported="false" />
         <activity
             android:name=".patientsDashBoard"
-            android:exported="false" />
+            android:exported="true"></activity>
+
 
         <activity
             android:name=".patientLogin"
@@ -35,7 +51,6 @@
 
         <activity
             android:name=".Splash"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

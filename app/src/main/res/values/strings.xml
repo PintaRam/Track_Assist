@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Track_Assist</string>
+
+    <string name="MAPS_API_KEY">AIzaSyBPIUMX05Di24qGOo9jBjcXO7sZqTL52qA</string>
+    <string name="title_activity_map_fragment">Map_fragment</string>
     <string name="login">LOGIN</string>
+
 </resources>
