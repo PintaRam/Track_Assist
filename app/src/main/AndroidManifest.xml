@@ -13,7 +13,16 @@
         android:theme="@style/Theme.Track_Assist"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".patientsRegistration"
+            android:exported="false" />
+        <activity
+            android:name=".selectionOFUser"
+            android:exported="false" />
+        <activity
+            android:name=".Splash"
+            android:exported="false" />
+        <activity
+            android:name=".patientsDashBoard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
