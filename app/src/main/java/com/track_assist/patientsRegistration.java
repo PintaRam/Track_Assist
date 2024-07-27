@@ -49,6 +49,8 @@ public class patientsRegistration extends AppCompatActivity {
                 if(validateAndRegister())
                 {
                     Intent i=new Intent(patientsRegistration.this,patientLogin.class);
+                    i.putExtra("Pass",passReg.getText().toString().trim());
+                    i.putExtra("Id",patientReg.getText().toString().trim());
                     startActivity(i);
                 }
                 else {
@@ -112,7 +114,7 @@ public class patientsRegistration extends AppCompatActivity {
     }
 
     private boolean isValidPassword(String password) {
-        if (password.length() < 13) {
+        if (password.length() < 8) {
             return false;
         }
 
