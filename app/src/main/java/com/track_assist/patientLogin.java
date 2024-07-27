@@ -1,94 +1,90 @@
 package com.track_assist;
 
-import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-
 public class patientLogin extends AppCompatActivity {
-
-
-    private EditText editTextId;
-    private EditText editTextPassword;
-    private Button buttonLogin;
-    private String  p_id;
+    Button loginButton;
+    FirebaseDatabase myFire;
+    DatabaseReference myDb;
+    TextInputLayout username, password;
+    String userId, guideName, guideId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_login);
 
-        editTextId = findViewById(R.id.editTextId);
-        editTextPassword = findViewById(R.id.editTextPassword);
-        buttonLogin = findViewById(R.id.buttonLogin);
+        // Initialize views
+        loginButton = findViewById(R.id.buttonLogin);
+        username = findViewById(R.id.editTextId);
+        password = findViewById(R.id.editTextPassword);
 
+        // Initialize Firebase
+        myFire = FirebaseDatabase.getInstance();
 
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                p_id = editTextId.getText().toString().trim();
-                String password = editTextPassword.getText().toString().trim();
+                String patientReg = username.getEditText().getText().toString().trim();
+                String logPassword = password.getEditText().getText().toString().trim();
 
-                validateCredentials(id,password);
+                if (patientReg.isEmpty() || logPassword.isEmpty()) {
+                    Toast.makeText(patientLogin.this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                myDb = myFire.getReference("Patient").child("info");
+                myDb.orderByChild("patientReg").equalTo(patientReg).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            boolean passwordMatched = false;
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                String passwordFromDb = snapshot.child("passReg").getValue(String.class);
+                                if (passwordFromDb != null && passwordFromDb.equals(logPassword)) {
+                                    passwordMatched = true;
+                                    userId = snapshot.getKey();
+                                    guideName = snapshot.child("guideName").getValue(String.class);
+                                    guideId = snapshot.child("guideId").getValue(String.class);
+                                    break;
+                                }
+                            }
+                            if (passwordMatched) {
+                                Toast.makeText(patientLogin.this, "Credentials Matched !!", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(patientLogin.this, patientsDashBoard.class);
+                                i.putExtra("UserId", userId);
+                                i.putExtra("patientReg", patientReg);
+                                i.putExtra("guideName", guideName);
+                                i.putExtra("guideId", guideId);
+                                startActivity(i);
+                            } else {
+                                Toast.makeText(patientLogin.this, "Password Not matched", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(patientLogin.this, "Invalid Patient Registration Number. Does not Exist", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(patientLogin.this, "Error checking registration number existence. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
     }
-
-    private void validateCredentials(String id, String password) {
-        DatabaseReference myDb=FirebaseDatabase.getInstance().getReference("Patient").child("");
-        myDb.orderByChild().equalTo(logname).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Email exists in the database
-                    // Now, iterate through the dataSnapshot to find the user with the given email
-                    boolean passwordMatched = false; // Flag to indicate if password matched
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        // Retrieve the user's password from the database
-                        String passwordFromDb = snapshot.child("paswd").getValue(String.class);
-                        // Check if the retrieved password matches the one provided by the user
-                        if (passwordFromDb != null && passwordFromDb.equals(logpaswd)) {
-                            // Password matches, authentication successful
-                            passwordMatched = true;
-                            break; // Exit the loop as authentication is successful
-                        }
-                    }
-                    if (passwordMatched) {
-                        Toast.makeText(Login.this, "Credentials Matched !!", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(Login.this, OrganizeMapper.class);
-                        startActivity(i);
-                    } else {
-                        Toast.makeText(Login.this, "Password Not matched", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    // Email does not exist in the database
-                    Toast.makeText(Login.this, "Invalid email.Email does not Exists", Toast.LENGTH_SHORT).show();
-                }
-            }
-    }
 }
-
-
-
-
-
-
-
