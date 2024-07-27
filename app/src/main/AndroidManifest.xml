@@ -26,10 +26,10 @@
             android:name=".selectionOFUser"
             android:exported="false" />
         <activity
-            android:name=".Splash"
+            android:name=".patientsDashBoard"
             android:exported="false" />
         <activity
-            android:name=".patientsDashBoard"
+            android:name=".Splash"
             android:exported="true">
 
         </activity>
