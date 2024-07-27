@@ -63,9 +63,7 @@ public class patientsRegistration extends AppCompatActivity {
 
         if(validateAndRegister())
                 { Database();
-                    Intent i=new Intent(patientsRegistration.this,patientLogin.class);
-                    i.putExtra("Pass",passReg.getText().toString().trim());
-                    startActivity(i);
+
                 } else {
                     Toast.makeText(patientsRegistration.this, "Registration Failed!!!", Toast.LENGTH_SHORT).show();
                 }
@@ -161,6 +159,7 @@ public class patientsRegistration extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
+
                     new Handler().postDelayed(() -> {
                         Toast.makeText(patientsRegistration.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(patientsRegistration.this, patientsDashBoard.class);

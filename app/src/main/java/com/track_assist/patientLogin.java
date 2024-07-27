@@ -16,6 +16,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 
 public class patientLogin extends AppCompatActivity {
 
@@ -23,7 +29,8 @@ public class patientLogin extends AppCompatActivity {
     private EditText editTextId;
     private EditText editTextPassword;
     private Button buttonLogin;
-    String patId,patPas;
+    private String  p_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,34 +40,49 @@ public class patientLogin extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
 
-        patPas=getIntent().getStringExtra("Pass");
-        patId=getIntent().getStringExtra("Id");
 
-        Log.d(patPas,"Patient Password");
-        Log.d(patId,"Patinet ID");
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String id = editTextId.getText().toString().trim();
+                p_id = editTextId.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
 
-                if (validatePassword(password)) {
-                    // Successful validation, navigate to PatientDashboardActivity
-                    Intent intent = new Intent(patientLogin.this, dashboard.class);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    // Show error message
-                    Toast.makeText(patientLogin.this, "Invalid Password", Toast.LENGTH_SHORT).show();
-                }
+                validateCredentials(id,password);
             }
         });
     }
 
-    private boolean validatePassword(String password) {
-        // Add your password validation logic here
-        return password.matches(patPas);
-
+    private void validateCredentials(String id, String password) {
+        DatabaseReference myDb=FirebaseDatabase.getInstance().getReference("Patient").child("");
+        myDb.orderByChild().equalTo(logname).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Email exists in the database
+                    // Now, iterate through the dataSnapshot to find the user with the given email
+                    boolean passwordMatched = false; // Flag to indicate if password matched
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        // Retrieve the user's password from the database
+                        String passwordFromDb = snapshot.child("paswd").getValue(String.class);
+                        // Check if the retrieved password matches the one provided by the user
+                        if (passwordFromDb != null && passwordFromDb.equals(logpaswd)) {
+                            // Password matches, authentication successful
+                            passwordMatched = true;
+                            break; // Exit the loop as authentication is successful
+                        }
+                    }
+                    if (passwordMatched) {
+                        Toast.makeText(Login.this, "Credentials Matched !!", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(Login.this, OrganizeMapper.class);
+                        startActivity(i);
+                    } else {
+                        Toast.makeText(Login.this, "Password Not matched", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // Email does not exist in the database
+                    Toast.makeText(Login.this, "Invalid email.Email does not Exists", Toast.LENGTH_SHORT).show();
+                }
+            }
     }
 }
 

@@ -16,7 +16,7 @@ public class dashboard extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(dashboard.this,Map_fragment.class);
+                Intent intent = new Intent(dashboard.this,patientsDashBoard.class);
                 startActivity(intent);
                 finish();
             }
