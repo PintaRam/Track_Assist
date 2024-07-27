@@ -18,6 +18,12 @@
         android:theme="@style/Theme.Track_Assist"
         tools:targetApi="31">
         <activity
+            android:name=".guideDashboard"
+            android:exported="false" />
+        <activity
+            android:name=".patientLogin2"
+            android:exported="false" />
+        <activity
             android:name=".guide_login"
             android:exported="false" />
         <activity
@@ -34,7 +40,7 @@
             android:label="@string/title_activity_map_fragment" />
         <activity
             android:name=".dashboard"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".selectionOFUser"
             android:exported="false" />
