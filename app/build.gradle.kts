@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -36,14 +35,13 @@ dependencies {
 
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation("com.airbnb.android:lottie:6.4.1")
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation(libs.firebase.auth)
-    implementation(libs.firebase.database)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
     implementation("com.airbnb.android:lottie:6.4.1")
-    implementation("com.google.firebase:firebase-analytics:22.0.0")
-    implementation("com.google.firebase:firebase-storage:21.0.0")
+
 }
