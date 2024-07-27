@@ -44,6 +44,8 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.4.1")
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation("com.google.firebase:firebase-database:21.0.0")
+    implementation(libs.play.services.location)
 
     // Firebase dependencies using BOM
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
@@ -53,6 +55,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")
     implementation(libs.gms.play.services.maps)
+
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
