@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Track_Assist"
         tools:targetApi="31">
+        <activity
+            android:name=".guide_login"
+            android:exported="false" />
+        <activity
+            android:name=".patientsRegistration"
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -27,27 +34,16 @@
             android:label="@string/title_activity_map_fragment" />
         <activity
             android:name=".dashboard"
-            android:exported="true">
-        </activity>
-
-
-
-        <activity
-            android:name=".patientsRegistration"
-            android:exported="false"></activity>
+            android:exported="true"></activity>
         <activity
             android:name=".selectionOFUser"
             android:exported="false" />
         <activity
             android:name=".patientsDashBoard"
-            android:exported="true"></activity>
-
-
+            android:exported="true" />
         <activity
             android:name=".patientLogin"
             android:exported="true" />
-
-
         <activity
             android:name=".Splash"
             android:exported="true">
