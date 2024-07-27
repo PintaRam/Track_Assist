@@ -16,7 +16,6 @@ firebaseAnalytics = "22.0.2"
 
 com-google-android-libraries-mapsplatform-secrets-gradle-plugin = "2.0.1"
 play-services-maps = "18.2.0"
-playServicesMaps = "19.0.0"
 
 
 [libraries]
@@ -34,7 +33,7 @@ firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
 
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "play-services-maps" }
-gms-play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
+gms-play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version = "19.0.0" }
 
 
 [plugins]
