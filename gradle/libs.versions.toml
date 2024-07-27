@@ -33,6 +33,7 @@ firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
 
 play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "play-services-maps" }
+gms-play-services-maps = { group = "com.google.android.gms", name = "play-services-maps", version = "19.0.0" }
 
 
 [plugins]

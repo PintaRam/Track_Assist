@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Track_Assist"
         tools:targetApi="31">
-
+        <activity
+            android:name=".guide_login"
+            android:exported="false" />
         <activity
             android:name=".patientsRegistration"
             android:exported="false" />
@@ -28,33 +30,21 @@
             android:label="@string/title_activity_map_fragment" />
         <activity
             android:name=".dashboard"
-            android:exported="true">
-        </activity>
-
-
-
+            android:exported="true"></activity>
         <activity
             android:name=".selectionOFUser"
             android:exported="false" />
         <activity
             android:name=".patientsDashBoard"
-            android:exported="true"></activity>
-
-
+            android:exported="true" />
         <activity
-
-
             android:name=".patientLogin"
             android:exported="true" />
-
-
         <activity
-
             android:name=".Splash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
