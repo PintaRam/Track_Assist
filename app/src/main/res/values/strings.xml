@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Track_Assist</string>
+    <string name="login">LOGIN</string>
 </resources>
