@@ -39,7 +39,7 @@ public class patientLogin extends AppCompatActivity {
 
                 if (validatePassword(password)) {
                     // Successful validation, navigate to PatientDashboardActivity
-                    Intent intent = new Intent(patientLogin.this, patientsDashBoard.class);
+                    Intent intent = new Intent(patientLogin.this, dashboard.class);
                     startActivity(intent);
                     finish();
                 } else {

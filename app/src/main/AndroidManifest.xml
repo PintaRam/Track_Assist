@@ -26,14 +26,11 @@
             android:exported="true">
         </activity>
 
-        <activity>
-            android:name=".patientsRegistration"
-            android:exported="true" >
-        </activity>
-
         <activity
             android:name=".patientsRegistration"
-            android:exported="false"></activity>
+            android:exported="true" />
+
+
         <activity
             android:name=".selectionOFUser"
             android:exported="false" />
@@ -45,9 +42,7 @@
         <activity
             android:name=".patientLogin"
             android:exported="true" />
-       <activity
-        android:name=".patientsDashBoard"
-        android:exported="false" />
+
 
         <activity
             android:name=".Splash"
