@@ -1,14 +1,98 @@
 package com.track_assist;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import java.util.ArrayList;
+import java.util.List;
 
 public class guide_login extends AppCompatActivity {
+
+    private EditText editTextGuideId;
+    private Button buttonOk;
+    private Spinner spinnerPatientIds;
+    private Button buttonViewPatientDetails;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide_login);
+
+        editTextGuideId = findViewById(R.id.editTextGuideId);
+        buttonOk = findViewById(R.id.buttonOk);
+        spinnerPatientIds = findViewById(R.id.spinnerPatientIds);
+        buttonViewPatientDetails = findViewById(R.id.buttonViewPatientDetails);
+
+        db = FirebaseFirestore.getInstance();
+
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String guideId = editTextGuideId.getText().toString().trim();
+                if (!TextUtils.isEmpty(guideId)) {
+                    fetchPatientIds(guideId);
+                } else {
+                    Toast.makeText(guide_login.this, "Please enter Guide ID", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        buttonViewPatientDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String selectedPatientId = spinnerPatientIds.getSelectedItem().toString();
+                if (!TextUtils.isEmpty(selectedPatientId)) {
+                    //Intent intent = new Intent(guide_login.this, PatientDetailsActivity.class);
+                    //intent.putExtra("patientId", selectedPatientId);
+                    //startActivity(intent);
+                } else {
+                    Toast.makeText(guide_login.this, "Please select a Patient ID", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void fetchPatientIds(String guideId) {
+        db.collection("journeyPlans")
+                .whereEqualTo("guideId", guideId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<String> patientIds = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String patientId = document.getString("patientId");
+                                if (!patientIds.contains(patientId)) {
+                                    patientIds.add(patientId);
+                                }
+                            }
+                            if (!patientIds.isEmpty()) {
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(guide_login.this, android.R.layout.simple_spinner_item, patientIds);
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                spinnerPatientIds.setAdapter(adapter);
+                                spinnerPatientIds.setVisibility(View.VISIBLE);
+                                buttonViewPatientDetails.setVisibility(View.VISIBLE);
+                            } else {
+                                Toast.makeText(guide_login.this, "No patients found for this guide", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(guide_login.this, "Failed to fetch patient IDs", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }
