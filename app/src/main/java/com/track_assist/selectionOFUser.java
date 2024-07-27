@@ -38,7 +38,7 @@ public class selectionOFUser extends AppCompatActivity {
         guide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(selectionOFUser.this,patientsRegistration.class);
+                Intent i = new Intent(selectionOFUser.this, guide_login.class);
                 startActivity(i);
             }
         });

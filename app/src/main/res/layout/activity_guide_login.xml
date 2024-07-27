@@ -17,7 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextGuideId"
-        android:layout_marginTop="76dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
         android:text="OK" />
 
     <Spinner
@@ -25,16 +26,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonOk"
-        android:layout_marginTop="16dp"
-        android:visibility="gone" />
+        android:layout_marginTop="24dp" />
 
     <Button
         android:id="@+id/buttonViewPatientDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/spinnerPatientIds"
-        android:layout_marginTop="16dp"
-        android:text="View Patient Details"
-        android:visibility="gone" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="View Patient Details" />
 
 </RelativeLayout>
