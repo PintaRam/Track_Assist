@@ -11,6 +11,13 @@ public class Users {
         this.patientReg=patientReg;
         this.passReg = passReg;
     }
+    Users(String patientReg, String patName)
+    {
+
+        this.patName = patName;
+        this.patientReg=patientReg;
+
+    }
 
     public String getGuideName() {
         return guideName;

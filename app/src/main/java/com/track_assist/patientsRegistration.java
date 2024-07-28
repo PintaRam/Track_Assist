@@ -27,7 +27,7 @@ public class patientsRegistration extends AppCompatActivity {
     String guideNameInput, guideIdInput, patNameInput, patAddressInput, patientRegInput, passRegInput, confirmPassRegInput;
 
     private FirebaseDatabase fireDb;
-    private DatabaseReference Dbrefer;
+    private DatabaseReference Dbrefer,Dbrefer2;
     private EditText guideName;
     private EditText guideId;
     private EditText patName;
@@ -56,6 +56,8 @@ public class patientsRegistration extends AppCompatActivity {
 
         fireDb = FirebaseDatabase.getInstance();
         Dbrefer = fireDb.getReference("Patient").child("info");
+        Dbrefer2 = fireDb.getReference("Patient").child("Guides");
+
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +91,7 @@ public class patientsRegistration extends AppCompatActivity {
                     Toast.makeText(patientsRegistration.this, "Patient already registered.", Toast.LENGTH_SHORT).show();
                 } else {
                     storeUserData(user);
+                    storeUserData2(user);
                 }
             }
 
@@ -155,6 +158,24 @@ public class patientsRegistration extends AppCompatActivity {
 
     private void storeUserData(Users user) {
         Dbrefer.child(user.getPatientReg()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    new Handler().postDelayed(() -> {
+                        Toast.makeText(patientsRegistration.this, "Registration Successful!", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(patientsRegistration.this, patientsDashBoard.class);
+                        startActivity(i);
+                        finish();
+                    }, 3000); // Reduced delay to 3 seconds for better user experience
+                } else {
+                    Toast.makeText(patientsRegistration.this, "Failed to store user data. Please try again.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+    private void storeUserData2(Users user) {
+        Users user2 = new Users(user.getPatientReg(),user.getPatName());
+        Dbrefer2.child(user.getGuideId()).child(user2.getPatientReg()).setValue(user2).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
