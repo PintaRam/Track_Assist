@@ -55,6 +55,7 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")
     implementation(libs.gms.play.services.maps)
+    implementation("com.google.android.libraries.places:places:2.5.0")
 
 
     testImplementation(libs.junit)
