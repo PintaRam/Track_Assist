@@ -5,23 +5,17 @@ import android.content.IntentSender;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -45,7 +39,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -71,6 +64,7 @@ public class patientsDashBoard   extends FragmentActivity implements OnMapReadyC
     private TextView patientName;
     private TextView patientAge;
     private ImageView imageView;
+    private Button buttonDial;
     Uri imageUri;
 
     private String regist;
@@ -90,18 +84,17 @@ public class patientsDashBoard   extends FragmentActivity implements OnMapReadyC
         pid=findViewById(R.id.patid);
         gid=findViewById(R.id.guid);
         city=findViewById(R.id.p_city);
+        buttonDial = findViewById(R.id.button3);
 
         // Retrieve patientReg from Intent
         regist = getIntent().getStringExtra("patientReg");
         Log.d("patientsDashBoard", "Retrieved patientReg: " + regist);
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openImageChooser();
-            }
-        });
+        imageView.setOnClickListener(v -> openImageChooser());
         // Set patient details
         // For example, these values can be fetched from a database or passed via Intent
+        buttonDial.setOnClickListener(v -> {
+            openDialer("1234567890");  // Replace with the phone number you want to pre-fill
+        });
 
 
         // Initialize the map fragment
@@ -294,5 +287,10 @@ public class patientsDashBoard   extends FragmentActivity implements OnMapReadyC
                 Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    private void openDialer(String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + phoneNumber));
+        startActivity(intent);
     }
 }
