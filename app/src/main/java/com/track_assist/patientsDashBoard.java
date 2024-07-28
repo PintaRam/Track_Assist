@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -65,7 +66,7 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
     private FusedLocationProviderClient fusedLocationClient;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final int REQUEST_CHECK_SETTINGS = 2;
-
+    private Button button2;
     private ImageView patientPhoto;
     private TextView patientName;
     private TextView patientAge;
@@ -94,7 +95,7 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
         pid = findViewById(R.id.patid);
         gid = findViewById(R.id.guid);
         city = findViewById(R.id.p_city);
-
+        button2 = findViewById(R.id.button2);
         // Retrieve patientReg from Intent
         regist = getIntent().getStringExtra("patientReg");
         Log.d("patientsDashBoard", "Retrieved patientReg: " + regist);
@@ -105,7 +106,13 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
                 openImageChooser();
             }
         });
-
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(patientsDashBoard.this, recentLandmark.class);
+                startActivity(i);
+            }
+        });
         // Initialize the map fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

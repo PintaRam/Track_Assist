@@ -25,9 +25,6 @@
             android:name=".guideDashboard"
             android:exported="false" />
         <activity
-            android:name=".patientLogin2"
-            android:exported="false" />
-        <activity
             android:name=".guide_login"
             android:exported="false" />
         <activity
@@ -50,10 +47,10 @@
             android:exported="false" />
         <activity
             android:name=".patientsDashBoard"
-            android:exported="true"></activity>
+            android:exported="false"/>
         <activity
             android:name=".patientLogin"
-            android:exported="true"></activity>
+            android:exported="true"/>
         <activity
             android:name=".Splash"
             android:exported="true">
