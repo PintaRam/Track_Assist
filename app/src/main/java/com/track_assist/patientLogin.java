@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -65,11 +66,10 @@ public class patientLogin extends AppCompatActivity {
                             }
                             if (passwordMatched) {
                                 Toast.makeText(patientLogin.this, "Credentials Matched !!", Toast.LENGTH_SHORT).show();
-                                Intent i = new Intent(patientLogin.this, patientsDashBoard.class);
+                                Intent i = new Intent(patientLogin.this, dashboard.class);
+                                Log.d(patientReg,"Reg");
                                 i.putExtra("UserId", userId);
-                                i.putExtra("patientReg", patientReg);
-                                i.putExtra("guideName", guideName);
-                                i.putExtra("guideId", guideId);
+                                i.putExtra("patientReg",patientReg);
                                 startActivity(i);
                             } else {
                                 Toast.makeText(patientLogin.this, "Password Not matched", Toast.LENGTH_SHORT).show();

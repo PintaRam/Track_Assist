@@ -46,7 +46,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation("com.google.firebase:firebase-database:21.0.0")
     implementation(libs.play.services.location)
-
+    implementation ("com.google.firebase:firebase-storage:19.2.1")
     // Firebase dependencies using BOM
     implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
     implementation("com.google.firebase:firebase-analytics")
