@@ -73,6 +73,9 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
     private ImageView imageView;
     private Uri imageUri;
     private Button journey;
+    //spoorthi
+    private Button buttonDial;
+
 
     private String regist;
     private TextView pname, gname, pid, gid, city;
@@ -97,6 +100,8 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
         gid = findViewById(R.id.guid);
         city = findViewById(R.id.p_city);
         journey=findViewById(R.id.jrny);
+        //Spoorthi
+        buttonDial=findViewById(R.id.button3);
 
         // Retrieve patientReg from Intent
         regist = getIntent().getStringExtra("patientReg");
@@ -115,6 +120,14 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
             @Override
             public void onClick(View v) {
                 openImageChooser();
+            }
+        });
+        //Emergency button code, Do Not TOUCH !!
+        // Set up button to open the dialer
+        buttonDial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openDialer("1234567890");  // Replace with the phone number you want to pre-fill
             }
         });
 
@@ -345,6 +358,12 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
             patientPhoto.setImageURI(imageUri);
             uploadImageToFirebase(imageUri);
         }
+    }
+    // Spoorthi
+    private void openDialer(String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + phoneNumber));
+        startActivity(intent);
     }
 
     private void uploadImageToFirebase(Uri imageUri) {
