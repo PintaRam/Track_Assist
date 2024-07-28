@@ -1,20 +1,11 @@
 package com.track_assist;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
-import android.net.Uri;
-import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -22,7 +13,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -45,7 +38,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -58,8 +50,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.HashMap;
 import java.util.Map;
 
-//public class patientsDashBoard extends AppCompatActivity {
-public class patientsDashBoard   extends FragmentActivity implements OnMapReadyCallback {
+public class patientsDashBoard extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -74,7 +65,7 @@ public class patientsDashBoard   extends FragmentActivity implements OnMapReadyC
     Uri imageUri;
 
     private String regist;
-    private TextView  pname,gname,pid,gid,city;
+    private TextView pname, gname, pid, gid, city;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,25 +75,23 @@ public class patientsDashBoard   extends FragmentActivity implements OnMapReadyC
         // Initialize views
         patientPhoto = findViewById(R.id.patientPhoto);
         patientName = findViewById(R.id.patientName);
-        imageView=findViewById(R.id.patientPhoto);
-        pname=findViewById(R.id.pname);
-        gname=findViewById(R.id.gname);
-        pid=findViewById(R.id.patid);
-        gid=findViewById(R.id.guid);
-        city=findViewById(R.id.p_city);
+        imageView = findViewById(R.id.patientPhoto);
+        pname = findViewById(R.id.pname);
+        gname = findViewById(R.id.gname);
+        pid = findViewById(R.id.patid);
+        gid = findViewById(R.id.guid);
+        city = findViewById(R.id.p_city);
 
         // Retrieve patientReg from Intent
         regist = getIntent().getStringExtra("patientReg");
         Log.d("patientsDashBoard", "Retrieved patientReg: " + regist);
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openImageChooser();
             }
         });
-        // Set patient details
-        // For example, these values can be fetched from a database or passed via Intent
-
 
         // Initialize the map fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -110,10 +99,13 @@ public class patientsDashBoard   extends FragmentActivity implements OnMapReadyC
 
         // Initialize location client
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        if(pid.getText().toString().trim()!=null)
-          loadPatientDetails(pid.getText().toString().trim());
-        else
-            Log.d("hi","Else Executed");
+
+        // Load patient details
+        if (regist != null && !regist.isEmpty()) {
+            loadPatientDetails(regist);
+        } else {
+            Log.d("patientsDashBoard", "No patient registration number provided");
+        }
     }
 
     @Override
@@ -133,33 +125,44 @@ public class patientsDashBoard   extends FragmentActivity implements OnMapReadyC
     private void loadPatientDetails(String patientRegNumber) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Patient").child("info");
 
-        databaseReference.orderByChild("patientReg").equalTo(regist).addValueEventListener(new ValueEventListener() {
+        databaseReference.orderByChild("patientReg").equalTo(patientRegNumber).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d(String.valueOf(dataSnapshot),"data");
+                Log.d("patientsDashBoard", "DataSnapshot: " + dataSnapshot);
                 if (dataSnapshot.exists()) {
-                    String pName = dataSnapshot.child("patName").getValue(String.class);
-                    String gName = dataSnapshot.child("guideName").getValue(String.class);
-                    String place = dataSnapshot.child("patAddress").getValue(String.class);
-                    String guideId = dataSnapshot.child("guideId").getValue(String.class);
-                    String patientId = dataSnapshot.child("patientReg").getValue(String.class);
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        String pName = snapshot.child("patName").getValue(String.class);
+                        String gName = snapshot.child("guideName").getValue(String.class);
+                        String place = snapshot.child("patAddress").getValue(String.class);
+                        String guideId = snapshot.child("guideId").getValue(String.class);
+                        String patientId = snapshot.child("patientReg").getValue(String.class);
 
-                    pname.setText(pName != null ? "Name :"+pName : "N/A");
-                    gname.setText(gName != null ?"Guide :"+gName : "N/A");
-                    city.setText(place != null ? "City :"+place : "N/A");
-                    gid.setText(guideId != null ? "Guide Id :"+ guideId : "N/A");
-                    pid.setText(patientId != null ? "Patient Id :"+patientId : "N/A");
-                    Toast.makeText(patientsDashBoard.this, "Patient Data Saved Successfully!!!", Toast.LENGTH_SHORT).show();
+                        Log.d("patientsDashBoard", "Patient Name: " + pName);
+                        Log.d("patientsDashBoard", "Guide Name: " + gName);
+                        Log.d("patientsDashBoard", "Place: " + place);
+                        Log.d("patientsDashBoard", "Guide ID: " + guideId);
+                        Log.d("patientsDashBoard", "Patient ID: " + patientId);
+
+                        pname.setText(pName != null ? "Name: " + pName : "N/A");
+                        gname.setText(gName != null ? "Guide: " + gName : "N/A");
+                        city.setText(place != null ? "City: " + place : "N/A");
+                        gid.setText(guideId != null ? "Guide Id: " + guideId : "N/A");
+                        pid.setText(patientId != null ? "Patient Id: " + patientId : "N/A");
+                    }
                 } else {
+                    Log.d("patientsDashBoard", "Patient data not found");
                     Toast.makeText(patientsDashBoard.this, "Patient data not found", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.d("patientsDashBoard", "DatabaseError: " + databaseError.getMessage());
                 Toast.makeText(patientsDashBoard.this, "Failed to load patient data", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     private void checkLocationSettings() {
         LocationRequest locationRequest = LocationRequest.create()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
@@ -199,6 +202,7 @@ public class patientsDashBoard   extends FragmentActivity implements OnMapReadyC
             }
         });
     }
+
     private void getDeviceLocation() {
         try {
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -209,30 +213,33 @@ public class patientsDashBoard   extends FragmentActivity implements OnMapReadyC
                         if (task.isSuccessful()) {
                             Location loc = task.getResult();
                             if (loc != null) {
-                                LatLng currentLocation = new LatLng(loc.getLatitude(), loc.getLongitude());
-
-                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
+                                LatLng currentLatLng = new LatLng(loc.getLatitude(), loc.getLongitude());
                                 mMap.addMarker(new MarkerOptions()
-                                        .position(currentLocation)
-                                        .title("You are here"+loc.getLongitude()+" "+loc.getLatitude())
-                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.man_marker_mini))); // Ensure you have a custom_marker.png in res/drawable
-
+                                        .position(currentLatLng)
+                                        .title("Current Location")
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.man_marker_mini)));
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f));
                             }
                         } else {
-                            Toast.makeText(patientsDashBoard.this, "Unable to get current location", Toast.LENGTH_SHORT).show();
+                            Log.d("patientsDashBoard", "Current location is null. Using defaults.");
+                            LatLng defaultLocation = new LatLng(-34, 151);
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation, 15f));
+                            mMap.addMarker(new MarkerOptions().position(defaultLocation).title("Default Location"));
+                            mMap.getUiSettings().setMyLocationButtonEnabled(false);
                         }
                     }
                 });
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            Log.e("Exception: %s", e.getMessage());
         }
     }
 
     private void openImageChooser() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        Intent intent = new Intent();
         intent.setType("image/*");
-        startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
     }
 
     @Override
@@ -247,7 +254,7 @@ public class patientsDashBoard   extends FragmentActivity implements OnMapReadyC
 
     private void uploadImageToFirebase() {
         if (imageUri != null) {
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference("patient_images/" +regist+ ".jpg");
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference("patient_images/" + regist + ".jpg");
             storageReference.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -272,14 +279,11 @@ public class patientsDashBoard   extends FragmentActivity implements OnMapReadyC
     }
 
     private void saveImageInfoToDatabase(String imageUrl) {
-        String patientId = pid.getText().toString().trim();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Patient").child("info").child(patientId);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Patient").child("info").child(regist);
         Map<String, Object> updates = new HashMap<>();
         updates.put("imageUrl", imageUrl);
         databaseReference.updateChildren(updates);
     }
-
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
