@@ -38,6 +38,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -206,11 +207,16 @@ public class patientsDashBoard   extends FragmentActivity implements OnMapReadyC
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful()) {
-                            Location lastKnownLocation = task.getResult();
-                            if (lastKnownLocation != null) {
-                                LatLng currentLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-                                mMap.addMarker(new MarkerOptions().position(currentLocation).title("You are here"));
+                            Location loc = task.getResult();
+                            if (loc != null) {
+                                LatLng currentLocation = new LatLng(loc.getLatitude(), loc.getLongitude());
+
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
+                                mMap.addMarker(new MarkerOptions()
+                                        .position(currentLocation)
+                                        .title("You are here"+loc.getLongitude()+" "+loc.getLatitude())
+                                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.man_marker_mini))); // Ensure you have a custom_marker.png in res/drawable
+
                             }
                         } else {
                             Toast.makeText(patientsDashBoard.this, "Unable to get current location", Toast.LENGTH_SHORT).show();
