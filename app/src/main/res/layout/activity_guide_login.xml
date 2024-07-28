@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".guide_login">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView1"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_alignParentTop="true"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/guige_login_page" />
 
     <EditText
         android:id="@+id/editTextGuideId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_below="@id/lottieAnimationView1"
+        android:layout_marginTop="16dp"
         android:hint="Enter Guide ID"
+        android:textAlignment="center"
+        android:textSize="25dp"
+        android:textStyle="bold"
         android:inputType="text"
         android:padding="16dp" />
 
@@ -20,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextGuideId"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_centerHorizontal="true"
         android:padding="16dp"
         android:text="Ok" />
 
@@ -30,7 +45,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonOk"
         android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:visibility="gone" />
 </RelativeLayout>
