@@ -66,6 +66,7 @@ public class Journey extends AppCompatActivity implements OnMapReadyCallback {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         requestLocationPermission();
+
         // Initialize databaseReference regardless of regnum
         databaseReference = FirebaseDatabase.getInstance().getReference("Patient").child("Journey");
 
