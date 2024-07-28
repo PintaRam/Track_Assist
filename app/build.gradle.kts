@@ -56,7 +56,12 @@ dependencies {
     implementation("com.google.firebase:firebase-storage")
     implementation(libs.gms.play.services.maps)
     implementation("com.google.android.libraries.places:places:2.5.0")
-
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation ("com.google.android.gms:play-services-maps:18.0.2")
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+    implementation ("com.google.maps.android:android-maps-utils:2.2.6")
+    implementation ("com.google.android.gms:play-services-maps:18.0.2")
+    implementation ("com.google.maps:google-maps-services:0.18.1")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
