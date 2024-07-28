@@ -1,6 +1,6 @@
 Installation
 Clone the repository:
-bash: git clone 
+bash: git clone https://github.com/PintaRam/Track_Assist.git
 Open the project in Android Studio.
 Sync the project with Gradle files.
 Build and run the application on an emulator or a physical device.
@@ -35,14 +35,6 @@ Dependencies
     Firebase: For authentication and real-time database.
     Lottie: For animations in the application.
     Material Components: For the UI elements.
-
-Contributing
-
-    Fork the repository.
-    Create a new branch (git checkout -b feature-branch).
-    Make your changes and commit them (git commit -m 'Add some feature').
-    Push to the branch (git push origin feature-branch).
-    Create a new Pull Request.
 
 License
 
