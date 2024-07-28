@@ -56,7 +56,7 @@ dependencies {
     implementation("com.google.firebase:firebase-storage")
     implementation(libs.gms.play.services.maps)
     implementation("com.google.android.libraries.places:places:2.5.0")
-
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
