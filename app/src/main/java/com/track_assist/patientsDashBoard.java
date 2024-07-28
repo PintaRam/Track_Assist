@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,7 +71,8 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
     private TextView patientName;
     private TextView patientAge;
     private ImageView imageView;
-    Uri imageUri;
+    private Uri imageUri;
+    private Button journey;
 
     private String regist;
     private TextView pname, gname, pid, gid, city;
@@ -94,11 +96,21 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
         pid = findViewById(R.id.patid);
         gid = findViewById(R.id.guid);
         city = findViewById(R.id.p_city);
+        journey=findViewById(R.id.jrny);
 
         // Retrieve patientReg from Intent
         regist = getIntent().getStringExtra("patientReg");
         Log.d("patientsDashBoard", "Retrieved patientReg: " + regist);
 
+        journey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i= new Intent(patientsDashBoard.this,Journey.class);
+                Log.d(regist,"Reg Num");
+                i.putExtra("PatNum",regist);
+                startActivity(i);
+            }
+        });
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
