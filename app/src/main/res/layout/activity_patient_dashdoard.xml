@@ -26,24 +26,63 @@
             android:layout_marginEnd="16dp"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_width="270dp"
+            android:layout_height="130dp"
+            android:orientation="vertical"
+            >
 
             <TextView
                 android:id="@+id/patientName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Patient Name"
+                android:text="Patient Details"
+                android:textAlignment="center"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/pname"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:text=""
+
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/gname"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="12sp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/patid"
+                    android:layout_width="110dp"
+                    android:text=""
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/guid"
+                    android:layout_width="110dp"
+                    android:text=""
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
             <TextView
-                android:id="@+id/patientAge"
+                android:id="@+id/p_city"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Age: 00"
-                android:textSize="16sp"/>
+                android:text=""
+                android:textSize="12sp">
+
+            </TextView>
+
 
         </LinearLayout>
     </LinearLayout>
@@ -78,22 +117,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button 1"
-            />
+            android:backgroundTint="#37A7EC"
+            android:text="My Journey" />
 
         <Button
             android:id="@+id/button2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button 2" />
+            android:backgroundTint="#AC8E08"
+            android:text="Recent" />
 
         <Button
             android:id="@+id/button3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button 3" />
+            android:backgroundTint="#D42F2F"
+            android:text="Emergency" />
 
     </LinearLayout>
 
