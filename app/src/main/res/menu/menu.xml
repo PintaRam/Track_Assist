@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/home"
+        android:title="My profile"
+        android:icon="@drawable/baseline_co_present_24"/>
+
+    <item android:id="@+id/contact"
+        android:title="Timeline"
+        android:icon="@drawable/baseline_timeline_24"/>
+
+    <item android:id="@+id/bluehtoot"
+        android:title="MapsActicity"
+        android:icon="@drawable/baseline_home_24"/>
+
+
+</menu>
