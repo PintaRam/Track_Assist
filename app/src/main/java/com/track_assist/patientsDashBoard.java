@@ -66,12 +66,16 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
     private FusedLocationProviderClient fusedLocationClient;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private static final int REQUEST_CHECK_SETTINGS = 2;
-    private Button button2;
+
     private ImageView patientPhoto;
     private TextView patientName;
     private TextView patientAge;
     private ImageView imageView;
-    Uri imageUri;
+    private Uri imageUri;
+    private Button journey;
+    //spoorthi
+    private Button buttonDial;
+
 
     private String regist;
     private TextView pname, gname, pid, gid, city;
@@ -95,24 +99,38 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
         pid = findViewById(R.id.patid);
         gid = findViewById(R.id.guid);
         city = findViewById(R.id.p_city);
-        button2 = findViewById(R.id.button2);
+        journey=findViewById(R.id.jrny);
+        //Spoorthi
+        buttonDial=findViewById(R.id.button3);
+
         // Retrieve patientReg from Intent
         regist = getIntent().getStringExtra("patientReg");
         Log.d("patientsDashBoard", "Retrieved patientReg: " + regist);
 
+        journey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i= new Intent(patientsDashBoard.this,Journey.class);
+                Log.d(regist,"Reg Num");
+                i.putExtra("PatNum",regist);
+                startActivity(i);
+            }
+        });
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openImageChooser();
             }
         });
-        button2.setOnClickListener(new View.OnClickListener() {
+        //Emergency button code, Do Not TOUCH !!
+        // Set up button to open the dialer
+        buttonDial.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(patientsDashBoard.this, recentLandmark.class);
-                startActivity(i);
+                openDialer("1234567890");  // Replace with the phone number you want to pre-fill
             }
         });
+
         // Initialize the map fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -340,6 +358,12 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
             patientPhoto.setImageURI(imageUri);
             uploadImageToFirebase(imageUri);
         }
+    }
+    // Spoorthi
+    private void openDialer(String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + phoneNumber));
+        startActivity(intent);
     }
 
     private void uploadImageToFirebase(Uri imageUri) {
