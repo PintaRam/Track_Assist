@@ -229,9 +229,11 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
                             Location loc = task.getResult();
                             if (loc != null) {
                                 LatLng currentLatLng = new LatLng(loc.getLatitude(), loc.getLongitude());
+
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f));
                                 updateMarker(currentLatLng, "Current Location");
                                 getAddressFromLocation(loc);
+
                             }
                         } else {
                             Log.d("patientsDashBoard", "Current location is null. Using defaults.");
