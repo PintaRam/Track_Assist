@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -17,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Track_Assist"
         tools:targetApi="31">
+        <activity
+            android:name=".recentLandmark"
+            android:exported="false" />
         <activity
             android:name=".guideDashboard"
             android:exported="false" />
@@ -46,14 +50,10 @@
             android:exported="false" />
         <activity
             android:name=".patientsDashBoard"
-            android:exported="true" >
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".patientLogin"
-            android:exported="true" >
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".Splash"
             android:exported="true">
