@@ -72,7 +72,7 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
     private TextView patientAge;
     private ImageView imageView;
     private Uri imageUri;
-    private Button journey;
+    private Button journey,recent;
     //spoorthi
     private Button buttonDial;
 
@@ -100,6 +100,7 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
         gid = findViewById(R.id.guid);
         city = findViewById(R.id.p_city);
         journey=findViewById(R.id.jrny);
+        recent  = findViewById(R.id.button2);
         //Spoorthi
         buttonDial=findViewById(R.id.button3);
 
@@ -130,7 +131,13 @@ public class patientsDashBoard extends FragmentActivity implements OnMapReadyCal
                 openDialer("1234567890");  // Replace with the phone number you want to pre-fill
             }
         });
-
+       recent.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent i = new Intent(patientsDashBoard.this , recentLandmark.class);
+               startActivity(i);
+           }
+       });
         // Initialize the map fragment
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

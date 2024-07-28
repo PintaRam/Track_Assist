@@ -31,6 +31,7 @@ import java.util.List;
 public class recentLandmark extends AppCompatActivity {
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private static final String TAG = "recentLandmark";
     private PlacesClient placesClient;
     private RecyclerView recyclerView;
     private LandmarkAdapter landmarkAdapter;
@@ -41,8 +42,10 @@ public class recentLandmark extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recent_landmark);
 
+        Log.d(TAG, "Activity created");
+
         // Initialize Places API
-        Places.initialize(getApplicationContext(), "@string/MAPS_API_KEY");
+        Places.initialize(getApplicationContext(), getString(R.string.MAPS_API_KEY));
         placesClient = Places.createClient(this);
 
         // Setup RecyclerView
@@ -68,6 +71,7 @@ public class recentLandmark extends AppCompatActivity {
         FindCurrentPlaceRequest request = FindCurrentPlaceRequest.newInstance(placeFields);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, "Location permission granted");
             Task<FindCurrentPlaceResponse> placeResponse = placesClient.findCurrentPlace(request);
             placeResponse.addOnCompleteListener(new OnCompleteListener<FindCurrentPlaceResponse>() {
                 @Override
@@ -80,8 +84,8 @@ public class recentLandmark extends AppCompatActivity {
                                 Landmark landmark = new Landmark(
                                         place.getName(),
                                         place.getAddress(),
-                                        place.getLatLng().latitude,
-                                        place.getLatLng().longitude,
+                                        place.getLatLng() != null ? place.getLatLng().latitude : 0,
+                                        place.getLatLng() != null ? place.getLatLng().longitude : 0,
                                         System.currentTimeMillis()
                                 );
                                 saveLandmarkToDatabase(landmark);
@@ -91,13 +95,13 @@ public class recentLandmark extends AppCompatActivity {
                         }
                     } else {
                         if (task.getException() != null) {
-                            Log.e("recentLandmark", "Exception: " + task.getException().getMessage());
+                            Log.e(TAG, "Exception: " + task.getException().getMessage());
                         }
                     }
                 }
             });
         } else {
-            Log.e("recentLandmark", "Location permission not granted");
+            Log.e(TAG, "Location permission not granted");
         }
     }
 

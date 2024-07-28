@@ -191,17 +191,17 @@ public class Journey extends AppCompatActivity implements OnMapReadyCallback {
             }
         }).start();
     }
+}
+
+class JourneyData {
+    public String source;
+    public String destination;
+
+    public JourneyData() {
     }
 
-     class JourneyData {
-        public String source;
-        public String destination;
-
-        public JourneyData() {
-        }
-
-        public JourneyData(String source, String destination) {
-            this.source = source;
-            this.destination = destination;
-        }
+    public JourneyData(String source, String destination) {
+        this.source = source;
+        this.destination = destination;
+    }
 }

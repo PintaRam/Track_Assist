@@ -9,14 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class LandmarkAdapter extends RecyclerView.Adapter<LandmarkAdapter.LandmarkViewHolder> {
 
-    private List<Landmark> landmarks;
+    private final List<Landmark> landmarkList;
 
-    public LandmarkAdapter(List<Landmark> landmarks) {
-        this.landmarks = landmarks;
+    public LandmarkAdapter(List<Landmark> landmarkList) {
+        this.landmarkList = landmarkList;
     }
 
     @NonNull
@@ -28,46 +27,24 @@ public class LandmarkAdapter extends RecyclerView.Adapter<LandmarkAdapter.Landma
 
     @Override
     public void onBindViewHolder(@NonNull LandmarkViewHolder holder, int position) {
-        Landmark landmark = landmarks.get(position);
-        holder.name.setText(landmark.getName());
-        holder.address.setText(landmark.getAddress());
-        holder.timeAgo.setText(getTimeAgo(landmark.getTimestamp()));
+        Landmark landmark = landmarkList.get(position);
+        holder.nameTextView.setText(landmark.getName());
+        holder.addressTextView.setText(landmark.getAddress());
     }
 
     @Override
     public int getItemCount() {
-        return landmarks.size();
+        return landmarkList.size();
     }
 
-    public static class LandmarkViewHolder extends RecyclerView.ViewHolder {
-
-        TextView name, address, timeAgo;
+    static class LandmarkViewHolder extends RecyclerView.ViewHolder {
+        TextView nameTextView;
+        TextView addressTextView;
 
         public LandmarkViewHolder(@NonNull View itemView) {
             super(itemView);
-            name = itemView.findViewById(R.id.landmarkName);
-            address = itemView.findViewById(R.id.landmarkAddress);
-            timeAgo = itemView.findViewById(R.id.timeAgo);
-        }
-    }
-
-    private String getTimeAgo(long time) {
-        long currentTime = System.currentTimeMillis();
-        long diff = currentTime - time;
-
-        long seconds = TimeUnit.MILLISECONDS.toSeconds(diff);
-        long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
-        long hours = TimeUnit.MILLISECONDS.toHours(diff);
-        long days = TimeUnit.MILLISECONDS.toDays(diff);
-
-        if (seconds < 60) {
-            return "just now";
-        } else if (minutes < 60) {
-            return minutes + " min ago";
-        } else if (hours < 24) {
-            return hours + " hrs ago";
-        } else {
-            return days + " days ago";
+            nameTextView = itemView.findViewById(R.id.landmark_name);
+            addressTextView = itemView.findViewById(R.id.landmark_address);
         }
     }
 }

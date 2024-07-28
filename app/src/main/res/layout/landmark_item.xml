@@ -1,36 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/landmarkName"
+        android:id="@+id/landmark_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Landmark Name"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textAppearance="?attr/textAppearanceListItem"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/landmarkAddress"
+        android:id="@+id/landmark_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Landmark Address"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/landmarkName" />
-
-    <TextView
-        android:id="@+id/timeAgo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="2 days ago"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/landmarkAddress" />
+        app:layout_constraintTop_toBottomOf="@id/landmark_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
